@@ -1,0 +1,172 @@
+.morning-content {
+  text-align: center;
+  padding-top: 24px;
+  padding-bottom: 32px;
+}
+
+/* Header */
+.morning-header {
+  margin-bottom: var(--space-xl);
+  animation: sunrise 600ms ease-out both;
+}
+
+.morning-round-badge {
+  display: inline-block;
+  padding: 4px 14px;
+  background: rgba(251, 176, 50, 0.15);
+  border: 1px solid rgba(251, 176, 50, 0.3);
+  border-radius: var(--radius-full);
+  font-size: 12px;
+  font-weight: 600;
+  color: #9a6010;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-bottom: var(--space-sm);
+}
+
+.morning-title {
+  font-size: 34px;
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  color: #2a1a05;
+  line-height: 1.1;
+}
+
+/* Result card */
+.morning-result-card {
+  border-radius: var(--radius-xl);
+  padding: var(--space-xl) var(--space-lg);
+  margin-bottom: var(--space-md);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  animation: morningReveal 500ms ease-out both;
+}
+
+.morning-result-card.mood-killed {
+  background: rgba(192, 57, 43, 0.06);
+  border: 1px solid rgba(192, 57, 43, 0.2);
+}
+
+.morning-result-card.mood-saved {
+  background: rgba(26, 122, 87, 0.06);
+  border: 1px solid rgba(26, 122, 87, 0.2);
+}
+
+.morning-result-card.mood-safe {
+  background: rgba(255, 255, 255, 0.6);
+  border: 1px solid rgba(251, 176, 50, 0.2);
+}
+
+.morning-result-icon {
+  font-size: 52px;
+  margin-bottom: var(--space-md);
+  animation: float 3s ease-in-out infinite;
+  display: block;
+}
+
+.morning-result-headline {
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin-bottom: var(--space-md);
+}
+
+.morning-narrative {
+  font-size: 14px;
+  line-height: 1.7;
+  color: #4a3a18;
+  font-style: italic;
+}
+
+/* Alive bar */
+.morning-alive-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm);
+  padding: 10px 20px;
+  background: rgba(255, 255, 255, 0.6);
+  border: 1px solid rgba(251, 176, 50, 0.2);
+  border-radius: var(--radius-full);
+  margin-bottom: var(--space-md);
+}
+
+.morning-alive-label {
+  font-size: 13px;
+  color: #7a6030;
+  font-weight: 500;
+}
+
+.morning-alive-count {
+  font-size: 22px;
+  font-weight: 900;
+  color: #2a1a05;
+}
+
+/* Detective */
+.morning-detective {
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(55, 138, 221, 0.25);
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg);
+  text-align: center;
+  margin-bottom: var(--space-md);
+}
+
+.morning-detective-label {
+  font-size: 12px;
+  font-weight: 700;
+  color: #1e5fa8;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: var(--space-sm);
+}
+
+.morning-detective-result {
+  font-size: 16px;
+  line-height: 1.5;
+  color: #1a1208;
+  margin-bottom: var(--space-sm);
+}
+
+.morning-detective-name {
+  font-weight: 800;
+}
+
+.morning-detective-note {
+  font-size: 11px;
+  color: #7a6030;
+  font-style: italic;
+}
+
+/* Waiting (non-host) */
+.morning-waiting {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-lg);
+  font-size: 13px;
+  color: #7a6030;
+  border: 1px dashed rgba(180, 130, 40, 0.3);
+  border-radius: var(--radius-lg);
+}
+
+.morning-waiting-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #e5a520;
+  animation: pulse 1.2s ease-in-out infinite;
+}
+
+.morning-waiting-dot:nth-child(1) { animation-delay: 0s; }
+.morning-waiting-dot:nth-child(2) { animation-delay: 0.2s; }
+.morning-waiting-dot:nth-child(3) { animation-delay: 0.4s; }
+
+.morning-waiting > div {
+  display: flex;
+  gap: 6px;
+}

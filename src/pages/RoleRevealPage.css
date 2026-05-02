@@ -1,0 +1,58 @@
+.role-reveal {
+  text-align: center;
+}
+
+.role-reveal-warning {
+  font-size: 13px;
+  color: var(--amber-primary);
+  background: rgba(229, 165, 32, 0.1);
+  border: 1px solid rgba(229, 165, 32, 0.2);
+  border-radius: var(--radius-md);
+  padding: var(--space-md);
+  margin-bottom: var(--space-xl);
+  animation: pulse 2s ease-in-out infinite;
+}
+
+.role-reveal-card {
+  background: var(--bg-card);
+  border: 2px solid;
+  border-radius: var(--radius-xl);
+  padding: var(--space-lg);
+  text-align: center;
+  animation: fadeInScale 600ms ease-out both;
+}
+
+.role-emoji {
+  font-size: 56px;
+  margin-bottom: var(--space-sm);
+  animation: float 3s ease-in-out infinite;
+}
+
+.role-label {
+  font-size: 28px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin-bottom: var(--space-sm);
+}
+
+.role-team {
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin-bottom: var(--space-md);
+}
+
+.role-desc {
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  max-width: 280px;
+  margin: 0 auto;
+}
+
+.role-reveal-waiting {
+  padding: var(--space-md);
+  border: 1px dashed currentColor;
+  border-radius: var(--radius-lg);
+  animation: pulse 2s ease-in-out infinite;
+  background: rgba(0, 0, 0, 0.2);
+}

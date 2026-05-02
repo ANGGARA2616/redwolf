@@ -1,0 +1,64 @@
+.vr-header {
+  margin-bottom: var(--space-lg);
+}
+
+.vr-header h1 {
+  color: #2a1a05;
+}
+
+.vr-header p {
+  color: #7a6030;
+}
+
+.vr-chart {
+  background: rgba(255,255,255,0.8);
+  border: 1px solid rgba(251,176,50,0.25);
+  border-radius: var(--radius-xl);
+  padding: var(--space-lg);
+  margin-bottom: var(--space-lg);
+}
+
+.vr-eliminated {
+  text-align: center;
+  background: rgba(255,255,255,0.8);
+  border: 1px solid rgba(251,176,50,0.25);
+  border-radius: var(--radius-xl);
+  padding: var(--space-xl);
+  margin-bottom: var(--space-lg);
+}
+
+.vr-eliminated-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: #9a7030;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: var(--space-sm);
+}
+
+.vr-eliminated-name {
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--red-primary);
+  margin-bottom: var(--space-md);
+}
+
+.vr-eliminated-role {
+  margin-bottom: var(--space-sm);
+}
+
+.vr-eliminated-team {
+  font-size: 14px;
+  color: #7a6030;
+}
+
+.vr-waiting {
+  text-align: center;
+  padding: var(--space-lg);
+  font-size: 14px;
+  color: #9a7030;
+  border: 1px dashed rgba(180,130,40,0.3);
+  border-radius: var(--radius-lg);
+  margin-top: var(--space-xl);
+  animation: pulse 2s ease-in-out infinite;
+}

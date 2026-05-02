@@ -1,0 +1,636 @@
+<style>
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+
+    body {
+        font-family: var(--font-sans);
+    }
+
+    .sim {
+        padding: 1rem 0;
+    }
+
+    .phase-bar {
+        display: flex;
+        gap: 6px;
+        flex-wrap: wrap;
+        margin-bottom: 1.5rem;
+    }
+
+    .phase-pill {
+        padding: 4px 10px;
+        border-radius: 20px;
+        font-size: 11px;
+        border: 0.5px solid var(--color-border-tertiary);
+        color: var(--color-text-secondary);
+        background: var(--color-background-secondary);
+    }
+
+    .phase-pill.active {
+        background: var(--color-background-primary);
+        border-color: var(--color-border-primary);
+        color: var(--color-text-primary);
+        font-weight: 500;
+    }
+
+    .phase-pill.done {
+        opacity: 0.45;
+    }
+
+    .gm-box {
+        background: var(--color-background-secondary);
+        border: 0.5px solid var(--color-border-tertiary);
+        border-radius: var(--border-radius-lg);
+        padding: 1rem 1.25rem;
+        margin-bottom: 1.25rem;
+    }
+
+    .gm-label {
+        font-size: 11px;
+        color: var(--color-text-tertiary);
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        margin-bottom: 6px;
+    }
+
+    .gm-text {
+        font-size: 15px;
+        color: var(--color-text-primary);
+        line-height: 1.5;
+    }
+
+    .phones {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        gap: 8px;
+        margin-bottom: 1.25rem;
+    }
+
+    .phone {
+        background: var(--color-background-primary);
+        border: 0.5px solid var(--color-border-tertiary);
+        border-radius: 10px;
+        padding: 8px;
+        min-height: 130px;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .phone-name {
+        font-size: 10px;
+        font-weight: 500;
+        color: var(--color-text-secondary);
+        margin-bottom: 6px;
+        padding-bottom: 5px;
+        border-bottom: 0.5px solid var(--color-border-tertiary);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .phone-badge {
+        font-size: 9px;
+        padding: 1px 5px;
+        border-radius: 8px;
+    }
+
+    .badge-wolf {
+        background: #FAECE7;
+        color: #993C1D;
+    }
+
+    .badge-dokter {
+        background: #E1F5EE;
+        color: #0F6E56;
+    }
+
+    .badge-detektif {
+        background: #E6F1FB;
+        color: #185FA5;
+    }
+
+    .badge-warga {
+        background: #F1EFE8;
+        color: #5F5E5A;
+    }
+
+    .phone-screen {
+        flex: 1;
+        font-size: 10px;
+        line-height: 1.5;
+        color: var(--color-text-primary);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .phone-screen.dark {
+        background: #111;
+        border-radius: 6px;
+        padding: 6px;
+        margin-top: 4px;
+        color: #eee;
+    }
+
+    .screen-action {
+        font-size: 9px;
+        font-weight: 500;
+        margin-bottom: 4px;
+    }
+
+    .screen-muted {
+        font-size: 9px;
+        color: #888;
+    }
+
+    .screen-btn {
+        display: inline-block;
+        margin-top: 5px;
+        padding: 3px 8px;
+        border-radius: 6px;
+        font-size: 9px;
+        border: 0.5px solid #555;
+        color: #ccc;
+        text-align: center;
+    }
+
+    .screen-btn.active-btn {
+        border-color: #E24B4A;
+        color: #E24B4A;
+    }
+
+    .screen-btn.green-btn {
+        border-color: #1D9E75;
+        color: #1D9E75;
+    }
+
+    .screen-btn.blue-btn {
+        border-color: #378ADD;
+        color: #378ADD;
+    }
+
+    .dead-overlay {
+        position: relative;
+    }
+
+    .dead-overlay::after {
+        content: "MATI";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.55);
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 11px;
+        font-weight: 500;
+        color: #fff;
+        z-index: 2;
+    }
+
+    .nav-row {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+    }
+
+    .nav-btn {
+        padding: 6px 14px;
+        border-radius: var(--border-radius-md);
+        border: 0.5px solid var(--color-border-secondary);
+        background: var(--color-background-primary);
+        color: var(--color-text-primary);
+        font-size: 13px;
+        cursor: pointer;
+    }
+
+    .nav-btn:disabled {
+        opacity: 0.35;
+        cursor: default;
+    }
+
+    .nav-btn.primary {
+        background: var(--color-text-primary);
+        color: var(--color-background-primary);
+        border-color: var(--color-text-primary);
+    }
+
+    .step-counter {
+        font-size: 12px;
+        color: var(--color-text-secondary);
+        margin-left: auto;
+    }
+
+    .highlight {
+        background: var(--color-background-info);
+        color: var(--color-text-info);
+        padding: 1px 5px;
+        border-radius: 4px;
+        font-size: 11px;
+    }
+
+    .voter-row {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+        margin-top: 4px;
+    }
+
+    .vote-item {
+        display: flex;
+        justify-content: space-between;
+        font-size: 9px;
+    }
+
+    .vote-bar-wrap {
+        height: 4px;
+        background: #333;
+        border-radius: 2px;
+        margin-top: 1px;
+    }
+
+    .vote-bar {
+        height: 4px;
+        background: #E24B4A;
+        border-radius: 2px;
+    }
+
+    .announce-box {
+        text-align: center;
+        padding: 8px 4px;
+    }
+
+    .big-icon {
+        font-size: 22px;
+        margin-bottom: 4px;
+        display: block;
+    }
+
+    .result-box {
+        border: 0.5px solid var(--color-border-tertiary);
+        border-radius: 8px;
+        padding: 8px 12px;
+        margin-top: 8px;
+        text-align: center;
+        background: var(--color-background-secondary);
+    }
+</style>
+
+<div class="sim">
+    <h2 class="sr-only">Simulasi lengkap game Werewolf dari awal hingga akhir</h2>
+
+    <div class="phase-bar" id="phasebar"></div>
+    <div class="gm-box">
+        <div class="gm-label">Game Master (Layar Utama / Pengumuman)</div>
+        <div class="gm-text" id="gmtext">—</div>
+    </div>
+
+    <div class="phones" id="phones"></div>
+
+    <div class="nav-row">
+        <button class="nav-btn" id="prevBtn" onclick="move(-1)">← Sebelumnya</button>
+        <button class="nav-btn primary" id="nextBtn" onclick="move(1)">Lanjut →</button>
+        <span class="step-counter" id="stepctr"></span>
+    </div>
+</div>
+
+<script>
+    const PLAYERS = [
+        { name: "Budi", role: "Werewolf", badge: "badge-wolf", roleLabel: "Serigala" },
+        { name: "Ani", role: "Dokter", badge: "badge-dokter", roleLabel: "Dokter" },
+        { name: "Ciko", role: "Detektif", badge: "badge-detektif", roleLabel: "Detektif" },
+        { name: "Dina", role: "Warga", badge: "badge-warga", roleLabel: "Warga" },
+        { name: "Eko", role: "Warga", badge: "badge-warga", roleLabel: "Warga" },
+    ];
+
+    const PHASES = [
+        "Lobby", "Bagi Peran", "Malam 1", "Pagi 1", "Diskusi 1", "Voting 1",
+        "Malam 2", "Pagi 2", "Diskusi 2", "Voting 2", "Game Over"
+    ];
+
+    function makeScreen(lines, dark = false, extraClass = "") {
+        const cls = dark ? "phone-screen dark" : "phone-screen";
+        return `<div class="${cls} ${extraClass}">${lines.join("")}</div>`;
+    }
+
+    const STEPS = [
+        {
+            phase: 0,
+            gm: "Selamat datang! Semua pemain buka website yang sama dan masukkan kode room. Kode room: <span class='highlight'>WOLF-42</span>",
+            screens: PLAYERS.map((p, i) => ({
+                header: p.name,
+                badge: null,
+                content: makeScreen([
+                    `<div class="screen-action">Halo, ${p.name}!</div>`,
+                    `<div class="screen-muted">Room: WOLF-42</div>`,
+                    `<div class="screen-muted">Pemain bergabung: ${i + 1}/5</div>`,
+                    `<div class="screen-btn">Menunggu...</div>`
+                ])
+            }))
+        },
+        {
+            phase: 1,
+            gm: "Semua pemain sudah join. Website otomatis mengacak & membagikan peran. Setiap pemain buka HP sendiri dan DIAM-DIAM lihat perannya, lalu tutup HP.",
+            screens: PLAYERS.map(p => ({
+                header: p.name,
+                badge: { label: p.roleLabel, cls: p.badge },
+                content: makeScreen([
+                    `<div class="screen-action">Peranmu malam ini:</div>`,
+                    `<div style="font-size:13px;font-weight:500;margin:4px 0;">${p.roleLabel}</div>`,
+                    p.role === "Werewolf"
+                        ? `<div class="screen-muted">Rekan serigala: tidak ada</div><div class="screen-btn active-btn">Paham ✓</div>`
+                        : p.role === "Dokter"
+                            ? `<div class="screen-muted">Selamatkan 1 orang tiap malam</div><div class="screen-btn green-btn">Paham ✓</div>`
+                            : p.role === "Detektif"
+                                ? `<div class="screen-muted">Selidiki identitas 1 orang</div><div class="screen-btn blue-btn">Paham ✓</div>`
+                                : `<div class="screen-muted">Bertahan dan identifikasi serigala</div><div class="screen-btn">Paham ✓</div>`
+                ], true)
+            }))
+        },
+        {
+            phase: 2,
+            gm: "🌙 MALAM TIBA. Semua tutup mata & pegang HP masing-masing. Semua layar aktif serentak — tidak ada yang bisa menebak siapa dapat perintah apa.",
+            sub: "Giliran Werewolf → semua layar tampil bersamaan:",
+            screens: [
+                {
+                    header: "Budi", badge: { label: "Serigala", cls: "badge-wolf" },
+                    content: makeScreen([
+                        `<div class="screen-action">Pilih korbanmu:</div>`,
+                        `<div class="screen-btn active-btn" style="margin:2px 0">○ Ani</div>`,
+                        `<div class="screen-btn active-btn" style="margin:2px 0">● Dina ← pilih</div>`,
+                        `<div class="screen-btn active-btn" style="margin:2px 0">○ Eko</div>`,
+                        `<div style="font-size:9px;color:#888;margin-top:4px">⏱ 15 detik</div>`
+                    ], true)
+                },
+                {
+                    header: "Ani", badge: null,
+                    content: makeScreen([
+                        `<div class="screen-muted">Bukan giliranmu.</div>`,
+                        `<div class="screen-muted">Tetap pegang HP.</div>`,
+                        `<div class="screen-btn" style="margin-top:6px">Tunggu... ⏱ 15s</div>`
+                    ], true)
+                },
+                {
+                    header: "Ciko", badge: null,
+                    content: makeScreen([
+                        `<div class="screen-muted">Bukan giliranmu.</div>`,
+                        `<div class="screen-muted">Tetap pegang HP.</div>`,
+                        `<div class="screen-btn" style="margin-top:6px">Tunggu... ⏱ 15s</div>`
+                    ], true)
+                },
+                {
+                    header: "Dina", badge: null,
+                    content: makeScreen([
+                        `<div class="screen-muted">Bukan giliranmu.</div>`,
+                        `<div class="screen-muted">Tetap pegang HP.</div>`,
+                        `<div class="screen-btn" style="margin-top:6px">Tunggu... ⏱ 15s</div>`
+                    ], true)
+                },
+                {
+                    header: "Eko", badge: null,
+                    content: makeScreen([
+                        `<div class="screen-muted">Bukan giliranmu.</div>`,
+                        `<div class="screen-muted">Tetap pegang HP.</div>`,
+                        `<div class="screen-btn" style="margin-top:6px">Tunggu... ⏱ 15s</div>`
+                    ], true)
+                },
+            ]
+        },
+        {
+            phase: 2,
+            gm: "🌙 Giliran Dokter → semua layar aktif serentak. Budi sudah memilih Dina sebagai korban.",
+            screens: [
+                {
+                    header: "Budi", badge: null,
+                    content: makeScreen([
+                        `<div class="screen-muted">Bukan giliranmu.</div>`,
+                        `<div class="screen-muted">Tetap pegang HP.</div>`,
+                        `<div class="screen-btn" style="margin-top:6px">Tunggu... ⏱ 15s</div>`
+                    ], true)
+                },
+                {
+                    header: "Ani", badge: { label: "Dokter", cls: "badge-dokter" },
+                    content: makeScreen([
+                        `<div class="screen-action">Siapa yang kamu selamatkan?</div>`,
+                        `<div class="screen-btn green-btn" style="margin:2px 0">○ Budi</div>`,
+                        `<div class="screen-btn green-btn" style="margin:2px 0">● Dina ← pilih</div>`,
+                        `<div class="screen-btn green-btn" style="margin:2px 0">○ Eko</div>`,
+                        `<div style="font-size:9px;color:#888;margin-top:4px">⏱ 15 detik</div>`
+                    ], true)
+                },
+                {
+                    header: "Ciko", badge: null,
+                    content: makeScreen([
+                        `<div class="screen-muted">Bukan giliranmu.</div>`,
+                        `<div class="screen-muted">Tetap pegang HP.</div>`,
+                        `<div class="screen-btn" style="margin-top:6px">Tunggu... ⏱ 15s</div>`
+                    ], true)
+                },
+                {
+                    header: "Dina", badge: null,
+                    content: makeScreen([
+                        `<div class="screen-muted">Bukan giliranmu.</div>`,
+                        `<div class="screen-muted">Tetap pegang HP.</div>`,
+                        `<div class="screen-btn" style="margin-top:6px">Tunggu... ⏱ 15s</div>`
+                    ], true)
+                },
+                {
+                    header: "Eko", badge: null,
+                    content: makeScreen([
+                        `<div class="screen-muted">Bukan giliranmu.</div>`,
+                        `<div class="screen-muted">Tetap pegang HP.</div>`,
+                        `<div class="screen-btn" style="margin-top:6px">Tunggu... ⏱ 15s</div>`
+                    ], true)
+                },
+            ]
+        },
+        {
+            phase: 2,
+            gm: "🌙 Giliran Detektif → semua layar aktif serentak. Ani telah memilih menyelamatkan Dina.",
+            screens: [
+                {
+                    header: "Budi", badge: null,
+                    content: makeScreen([`<div class="screen-muted">Bukan giliranmu.</div><div class="screen-btn" style="margin-top:6px">Tunggu... ⏱ 15s</div>`], true)
+                },
+                {
+                    header: "Ani", badge: null,
+                    content: makeScreen([`<div class="screen-muted">Bukan giliranmu.</div><div class="screen-btn" style="margin-top:6px">Tunggu... ⏱ 15s</div>`], true)
+                },
+                {
+                    header: "Ciko", badge: { label: "Detektif", cls: "badge-detektif" },
+                    content: makeScreen([
+                        `<div class="screen-action">Selidiki siapa?</div>`,
+                        `<div class="screen-btn blue-btn" style="margin:2px 0">○ Ani</div>`,
+                        `<div class="screen-btn blue-btn" style="margin:2px 0">● Budi ← pilih</div>`,
+                        `<div class="screen-btn blue-btn" style="margin:2px 0">○ Eko</div>`,
+                        `<div style="font-size:9px;color:#888;margin-top:4px">⏱ 15 detik</div>`
+                    ], true)
+                },
+                {
+                    header: "Dina", badge: null,
+                    content: makeScreen([`<div class="screen-muted">Bukan giliranmu.</div><div class="screen-btn" style="margin-top:6px">Tunggu... ⏱ 15s</div>`], true)
+                },
+                {
+                    header: "Eko", badge: null,
+                    content: makeScreen([`<div class="screen-muted">Bukan giliranmu.</div><div class="screen-btn" style="margin-top:6px">Tunggu... ⏱ 15s</div>`], true)
+                },
+            ]
+        },
+        {
+            phase: 3,
+            gm: "☀️ PAGI TIBA! Detektif Ciko mendapat info: Budi adalah SERIGALA. Semua buka mata.",
+            screens: [
+                { header: "Budi", badge: null, content: makeScreen([`<div style="text-align:center"><div class="big-icon">☀️</div><div class="screen-muted">Pagi tiba.</div><div class="screen-muted">Dina selamat malam ini.</div></div>`], true) },
+                { header: "Ani", badge: null, content: makeScreen([`<div style="text-align:center"><div class="big-icon">☀️</div><div class="screen-muted">Pagi tiba.</div><div class="screen-muted">Dina selamat malam ini.</div></div>`], true) },
+                {
+                    header: "Ciko", badge: { label: "Detektif", cls: "badge-detektif" },
+                    content: makeScreen([
+                        `<div class="screen-action">Hasil penyelidikan:</div>`,
+                        `<div style="font-size:10px;margin:3px 0">Budi → <span style="color:#E24B4A;font-weight:500">SERIGALA!</span></div>`,
+                        `<div class="screen-muted">Hanya kamu yang tahu ini.</div>`
+                    ], true)
+                },
+                { header: "Dina", badge: null, content: makeScreen([`<div style="text-align:center"><div class="big-icon">☀️</div><div class="screen-muted">Pagi tiba.</div><div class="screen-muted">Dina selamat malam ini.</div></div>`], true) },
+                { header: "Eko", badge: null, content: makeScreen([`<div style="text-align:center"><div class="big-icon">☀️</div><div class="screen-muted">Pagi tiba.</div><div class="screen-muted">Dina selamat malam ini.</div></div>`], true) },
+            ]
+        },
+        {
+            phase: 4,
+            gm: "💬 DISKUSI (3 menit). Semua boleh berbicara, berdebat, dan saling tuduh secara langsung. Timer berjalan di semua HP.",
+            note: "Ciko tahu Budi serigala tapi belum tentu didengar. Budi harus pintar berkelit!",
+            screens: PLAYERS.map(p => ({
+                header: p.name, badge: null,
+                content: makeScreen([
+                    `<div class="screen-action">Waktu diskusi</div>`,
+                    `<div style="font-size:18px;font-weight:500;text-align:center;margin:6px 0">2:47</div>`,
+                    `<div class="screen-muted" style="text-align:center">Bicarakan & temukan serigala!</div>`,
+                    `<div style="font-size:9px;color:#888;margin-top:4px;text-align:center">Voting dimulai saat timer habis</div>`
+                ], true)
+            }))
+        },
+        {
+            phase: 5,
+            gm: "🗳️ VOTING! Siapa yang paling dicurigai? Semua pilih lewat HP masing-masing secara BERSAMAAN (tidak terlihat pilihan orang lain sampai semua submit).",
+            screens: [
+                { header: "Budi", badge: null, content: makeScreen([`<div class="screen-action">Pilih yang dieliminasi:</div><div class="screen-btn active-btn" style="margin:2px 0">● Ciko ← vote</div><div class="screen-btn active-btn" style="margin:2px 0">○ Dina</div><div class="screen-btn" style="margin-top:4px;border-color:#1D9E75;color:#1D9E75">Submit</div>`], true) },
+                { header: "Ani", badge: null, content: makeScreen([`<div class="screen-action">Pilih yang dieliminasi:</div><div class="screen-btn active-btn" style="margin:2px 0">● Budi ← vote</div><div class="screen-btn active-btn" style="margin:2px 0">○ Ciko</div><div class="screen-btn" style="margin-top:4px;border-color:#1D9E75;color:#1D9E75">Submit</div>`], true) },
+                { header: "Ciko", badge: null, content: makeScreen([`<div class="screen-action">Pilih yang dieliminasi:</div><div class="screen-btn active-btn" style="margin:2px 0">● Budi ← vote</div><div class="screen-btn active-btn" style="margin:2px 0">○ Dina</div><div class="screen-btn" style="margin-top:4px;border-color:#1D9E75;color:#1D9E75">Submit</div>`], true) },
+                { header: "Dina", badge: null, content: makeScreen([`<div class="screen-action">Pilih yang dieliminasi:</div><div class="screen-btn active-btn" style="margin:2px 0">● Budi ← vote</div><div class="screen-btn active-btn" style="margin:2px 0">○ Eko</div><div class="screen-btn" style="margin-top:4px;border-color:#1D9E75;color:#1D9E75">Submit</div>`], true) },
+                { header: "Eko", badge: null, content: makeScreen([`<div class="screen-action">Pilih yang dieliminasi:</div><div class="screen-btn active-btn" style="margin:2px 0">○ Budi</div><div class="screen-btn active-btn" style="margin:2px 0">● Ciko ← vote</div><div class="screen-btn" style="margin-top:4px;border-color:#1D9E75;color:#1D9E75">Submit</div>`], true) },
+            ]
+        },
+        {
+            phase: 5,
+            gm: "📊 Hasil voting sudah masuk semua. Website hitung suara otomatis dan umumkan hasilnya.",
+            screens: PLAYERS.map(p => ({
+                header: p.name, badge: null,
+                content: makeScreen([
+                    `<div class="screen-action">Hasil voting:</div>`,
+                    `<div class="voter-row">
+          <div class="vote-item"><span>Budi</span><span style="color:#E24B4A;font-weight:500">3 suara</span></div>
+          <div class="vote-bar-wrap"><div class="vote-bar" style="width:60%"></div></div>
+          <div class="vote-item" style="margin-top:3px"><span>Ciko</span><span>2 suara</span></div>
+          <div class="vote-bar-wrap"><div class="vote-bar" style="width:40%;background:#555"></div></div>
+        </div>`,
+                    `<div style="font-size:9px;color:#E24B4A;margin-top:5px;font-weight:500">Budi dieliminasi!</div>`
+                ], true)
+            }))
+        },
+        {
+            phase: 6,
+            gm: "🌙 MALAM KE-2. Budi tereliminasi dan terungkap: dia adalah SERIGALA. Sekarang tidak ada werewolf yang tersisa — tetapi game tetap lanjut untuk konfirmasi kondisi menang.",
+            screens: [
+                {
+                    header: "Budi", badge: { label: "Serigala", cls: "badge-wolf" }, dead: true,
+                    content: makeScreen([`<div class="announce-box"><div class="big-icon">💀</div><div class="screen-muted">Kamu sudah tereliminasi.</div><div class="screen-muted">Identitasmu: Serigala</div></div>`], true)
+                },
+                { header: "Ani", badge: null, content: makeScreen([`<div class="screen-muted">Bukan giliranmu.</div><div class="screen-btn" style="margin-top:6px">Tunggu... ⏱ 15s</div>`], true) },
+                { header: "Ciko", badge: null, content: makeScreen([`<div class="screen-muted">Bukan giliranmu.</div><div class="screen-btn" style="margin-top:6px">Tunggu... ⏱ 15s</div>`], true) },
+                { header: "Dina", badge: null, content: makeScreen([`<div class="screen-muted">Bukan giliranmu.</div><div class="screen-btn" style="margin-top:6px">Tunggu... ⏱ 15s</div>`], true) },
+                { header: "Eko", badge: null, content: makeScreen([`<div class="screen-muted">Bukan giliranmu.</div><div class="screen-btn" style="margin-top:6px">Tunggu... ⏱ 15s</div>`], true) },
+            ]
+        },
+        {
+            phase: 10,
+            gm: "🎉 GAME OVER — WARGA DESA MENANG! Semua werewolf telah dieliminasi. Website ungkap semua identitas.",
+            screens: [
+                {
+                    header: "Budi", badge: { label: "Serigala", cls: "badge-wolf" }, dead: true,
+                    content: makeScreen([`<div class="announce-box"><div style="font-size:9px;color:#E24B4A;font-weight:500">SERIGALA</div><div class="screen-muted" style="margin-top:2px">Kalah :(</div></div>`], true)
+                },
+                {
+                    header: "Ani", badge: { label: "Dokter", cls: "badge-dokter" },
+                    content: makeScreen([`<div class="announce-box"><div style="font-size:9px;color:#1D9E75;font-weight:500">DOKTER</div><div class="screen-muted" style="margin-top:2px">Menang!</div></div>`], true)
+                },
+                {
+                    header: "Ciko", badge: { label: "Detektif", cls: "badge-detektif" },
+                    content: makeScreen([`<div class="announce-box"><div style="font-size:9px;color:#378ADD;font-weight:500">DETEKTIF</div><div class="screen-muted" style="margin-top:2px">Menang!</div></div>`], true)
+                },
+                {
+                    header: "Dina", badge: { label: "Warga", cls: "badge-warga" },
+                    content: makeScreen([`<div class="announce-box"><div style="font-size:9px;color:#5F5E5A;font-weight:500">WARGA</div><div class="screen-muted" style="margin-top:2px">Menang!</div></div>`], true)
+                },
+                {
+                    header: "Eko", badge: { label: "Warga", cls: "badge-warga" },
+                    content: makeScreen([`<div class="announce-box"><div style="font-size:9px;color:#5F5E5A;font-weight:500">WARGA</div><div class="screen-muted" style="margin-top:2px">Menang!</div></div>`], true)
+                },
+            ]
+        },
+    ];
+
+    const STEP_LABELS = [
+        "1. Lobby & Join Room",
+        "2. Bagi Peran (rahasia)",
+        "3a. Malam 1: Giliran Werewolf",
+        "3b. Malam 1: Giliran Dokter",
+        "3c. Malam 1: Giliran Detektif",
+        "4. Pagi Hari",
+        "5. Diskusi",
+        "6a. Voting: Pilih",
+        "6b. Voting: Hasil",
+        "7. Malam Ke-2",
+        "8. Game Over",
+    ];
+
+    let cur = 0;
+
+    function render() {
+        const s = STEPS[cur];
+
+        const pb = document.getElementById("phasebar");
+        pb.innerHTML = STEP_LABELS.map((l, i) =>
+            `<span class="phase-pill${i === cur ? " active" : i < cur ? " done" : ""}">${l}</span>`
+        ).join("");
+
+        document.getElementById("gmtext").innerHTML = s.gm + (s.note ? `<div style="margin-top:6px;font-size:13px;color:var(--color-text-secondary)">💡 ${s.note}</div>` : "");
+
+        const ph = document.getElementById("phones");
+        ph.innerHTML = s.screens.map(sc =>
+            `<div class="phone${sc.dead ? " dead-overlay" : ""}">
+      <div class="phone-name">
+        ${sc.header}
+        ${sc.badge ? `<span class="phone-badge ${sc.badge.cls}">${sc.badge.label}</span>` : ""}
+      </div>
+      ${sc.content}
+    </div>`
+        ).join("");
+
+        document.getElementById("prevBtn").disabled = cur === 0;
+        document.getElementById("nextBtn").disabled = cur === STEPS.length - 1;
+        document.getElementById("nextBtn").textContent = cur === STEPS.length - 1 ? "Selesai ✓" : "Lanjut →";
+        document.getElementById("stepctr").textContent = `${cur + 1} / ${STEPS.length}`;
+    }
+
+    function move(dir) {
+        cur = Math.max(0, Math.min(STEPS.length - 1, cur + dir));
+        render();
+    }
+
+    render();
+</script>

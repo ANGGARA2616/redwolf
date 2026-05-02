@@ -1,0 +1,163 @@
+/* ─── Night Background ─────────────────────────────────────────────────── */
+.night-bg {
+  background: radial-gradient(ellipse at 50% 0%, #0d0d1a 0%, #000005 60%, #000 100%);
+  overflow: hidden;
+}
+
+/* Starfield */
+.night-stars {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background-image:
+    radial-gradient(1px 1px at 20% 30%, rgba(255,255,255,0.5) 0%, transparent 100%),
+    radial-gradient(1px 1px at 80% 10%, rgba(255,255,255,0.4) 0%, transparent 100%),
+    radial-gradient(1.5px 1.5px at 40% 70%, rgba(255,255,255,0.3) 0%, transparent 100%),
+    radial-gradient(1px 1px at 60% 85%, rgba(255,255,255,0.5) 0%, transparent 100%),
+    radial-gradient(1px 1px at 10% 60%, rgba(255,255,255,0.35) 0%, transparent 100%),
+    radial-gradient(1px 1px at 90% 55%, rgba(255,255,255,0.4) 0%, transparent 100%),
+    radial-gradient(1.5px 1.5px at 70% 40%, rgba(255,255,255,0.25) 0%, transparent 100%),
+    radial-gradient(1px 1px at 30% 90%, rgba(255,255,255,0.3) 0%, transparent 100%),
+    radial-gradient(1px 1px at 50% 20%, rgba(255,255,255,0.45) 0%, transparent 100%),
+    radial-gradient(1px 1px at 15% 45%, rgba(255,255,255,0.2) 0%, transparent 100%),
+    radial-gradient(1px 1px at 85% 75%, rgba(255,255,255,0.35) 0%, transparent 100%),
+    radial-gradient(1px 1px at 55% 50%, rgba(255,255,255,0.2) 0%, transparent 100%);
+  animation: twinkle 6s ease-in-out infinite alternate;
+}
+
+@keyframes twinkle {
+  from { opacity: 0.7; }
+  to   { opacity: 1; }
+}
+
+/* ─── Phase Header ─────────────────────────────────────────────────────── */
+.night-header {
+  text-align: center;
+  margin-bottom: var(--space-xl);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-lg);
+}
+
+.night-phase-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 700;
+  color: rgba(255,255,255,0.6);
+  padding: 6px 18px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: var(--radius-full);
+  letter-spacing: 0.02em;
+}
+
+.night-phase-emoji {
+  font-size: 16px;
+}
+
+/* ─── Action mode ──────────────────────────────────────────────────────── */
+.night-instruction {
+  font-size: 14px;
+  font-weight: 600;
+  color: rgba(255,255,255,0.5);
+  margin-bottom: var(--space-md);
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.night-action {
+  width: 100%;
+}
+
+/* Night-tinted player avatars */
+.night-avatar {
+  background: rgba(255,255,255,0.06) !important;
+  color: rgba(255,255,255,0.4) !important;
+}
+
+/* ─── Waiting mode ─────────────────────────────────────────────────────── */
+.night-waiting {
+  text-align: center;
+  padding: var(--space-2xl) 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-md);
+}
+
+.night-moon-icon {
+  font-size: 72px;
+  animation: float 4s ease-in-out infinite;
+  filter: drop-shadow(0 0 20px rgba(255,255,255,0.15));
+}
+
+.night-waiting-text {
+  font-size: 20px;
+  font-weight: 700;
+  color: rgba(255,255,255,0.75);
+}
+
+.night-waiting-sub {
+  font-size: 14px;
+  color: rgba(255,255,255,0.3);
+  font-style: italic;
+}
+
+/* Animated waiting dots */
+.night-waiting-dots {
+  display: flex;
+  gap: 8px;
+  margin-top: var(--space-sm);
+}
+
+.night-waiting-dots span {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.25);
+  animation: pulse 1.4s ease-in-out infinite;
+}
+
+.night-waiting-dots span:nth-child(2) { animation-delay: 0.2s; }
+.night-waiting-dots span:nth-child(3) { animation-delay: 0.4s; }
+
+/* ─── Werewolf Co-hunt Hover Indicator ─────────────────────────────────── */
+
+/* Outline glow when another werewolf is targeting this player */
+.wolf-hover-target {
+  border-color: rgba(226, 75, 74, 0.6) !important;
+  box-shadow: 0 0 0 2px rgba(226, 75, 74, 0.2), 0 0 12px rgba(226, 75, 74, 0.15) !important;
+  animation: wolfTargetPulse 1.5s ease-in-out infinite;
+}
+
+@keyframes wolfTargetPulse {
+  0%, 100% {
+    box-shadow: 0 0 0 2px rgba(226, 75, 74, 0.2), 0 0 12px rgba(226, 75, 74, 0.15);
+  }
+  50% {
+    box-shadow: 0 0 0 3px rgba(226, 75, 74, 0.35), 0 0 20px rgba(226, 75, 74, 0.25);
+  }
+}
+
+/* Claw emoji badge — positioned at the right edge */
+.wolf-claw-indicator {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  opacity: 0.9;
+  animation: clawAppear 0.25s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  flex-shrink: 0;
+  margin-left: auto;
+}
+
+@keyframes clawAppear {
+  from { transform: scale(0) rotate(-30deg); opacity: 0; }
+  to   { transform: scale(1) rotate(0deg);   opacity: 0.9; }
+}
+

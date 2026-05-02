@@ -1,0 +1,74 @@
+.discussion-header {
+  margin-bottom: var(--space-lg);
+}
+
+.discussion-header h1 {
+  color: #2a1a05;
+}
+
+.discussion-header p {
+  color: #7a6030;
+}
+
+.discussion-timer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: var(--space-xl);
+  padding: var(--space-xl) var(--space-lg);
+  background: rgba(255,255,255,0.8);
+  border: 1px solid rgba(251,176,50,0.25);
+  border-radius: var(--radius-xl);
+  backdrop-filter: blur(8px);
+}
+
+.discussion-alive-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #9a7030;
+  margin-bottom: var(--space-sm);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.discussion-players {
+  margin-bottom: var(--space-md);
+  padding: var(--space-lg);
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--border-subtle);
+}
+
+.discussion-waiting {
+  text-align: center;
+  padding: var(--space-lg);
+  font-size: 14px;
+  color: #9a7030;
+  border: 1px dashed rgba(180,130,40,0.3);
+  border-radius: var(--radius-lg);
+  margin-top: var(--space-lg);
+  animation: pulse 2s ease-in-out infinite;
+}
+
+.discussion-spectator {
+  padding: 10px 16px;
+  background: rgba(180, 130, 40, 0.08);
+  border: 1px solid rgba(180, 130, 40, 0.2);
+  border-radius: var(--radius-lg);
+  font-size: 13px;
+  color: #7a6030;
+  text-align: center;
+  margin-bottom: var(--space-md);
+  font-style: italic;
+}
+
+.discussion-host-dead {
+  padding: 10px 16px;
+  background: rgba(226, 75, 74, 0.06);
+  border: 1px solid rgba(226, 75, 74, 0.2);
+  border-radius: var(--radius-lg);
+  font-size: 13px;
+  color: #8b3030;
+  text-align: center;
+  margin-bottom: var(--space-md);
+  font-weight: 500;
+}
