@@ -1,4 +1,5 @@
 import { useGame, ROLES, ROLE_INFO } from '../context/GameContext'
+import { DaySilhouette } from '../components/Silhouette'
 import './MorningPage.css'
 
 /** Build a dramatic narrative of what happened last night */
@@ -70,6 +71,7 @@ export default function MorningPage() {
 
   return (
     <div className="page page-day">
+      <DaySilhouette />
       <div className="container" style={{ position: 'relative', zIndex: 2 }}>
         <div className="morning-content animate-fade-in">
 

@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useGame } from '../context/GameContext'
 import Timer from '../components/Timer'
+import { DaySilhouette } from '../components/Silhouette'
 import './VotingPage.css'
 
 export default function VotingPage() {
@@ -38,6 +39,7 @@ export default function VotingPage() {
   if (!isAlive) {
     return (
       <div className="page page-day">
+        <DaySilhouette />
         <div className="bg-grid" />
         <div className="container" style={{ position: 'relative', zIndex: 2 }}>
           <div className="voting-header animate-fade-in">
@@ -112,6 +114,7 @@ export default function VotingPage() {
   // ── ACTIVE VOTE view ─────────────────────────────────────────────────
   return (
     <div className="page page-day">
+      <DaySilhouette />
       <div className="bg-grid" />
       <div className="container" style={{ position: 'relative', zIndex: 2 }}>
         <div className="voting-header animate-fade-in">

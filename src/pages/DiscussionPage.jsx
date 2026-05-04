@@ -1,5 +1,6 @@
 import { useGame } from '../context/GameContext'
 import Timer from '../components/Timer'
+import { DaySilhouette } from '../components/Silhouette'
 import './DiscussionPage.css'
 
 export default function DiscussionPage() {
@@ -16,6 +17,7 @@ export default function DiscussionPage() {
 
   return (
     <div className="page page-day">
+      <DaySilhouette />
       <div className="bg-grid" />
       <div className="container" style={{ position: 'relative', zIndex: 2 }}>
 

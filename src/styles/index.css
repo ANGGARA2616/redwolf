@@ -874,3 +874,175 @@ img, svg {
     padding: var(--space-md);
   }
 }
+
+/* ================================================================
+   SILHOUETTE OVERLAY
+   ================================================================ */
+.silhouette {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: auto;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Night silhouette — layered mountains + pine forest */
+.silhouette-night {
+  opacity: 1;
+  min-height: 220px;
+  filter: drop-shadow(0 -8px 30px rgba(26, 10, 46, 0.95));
+}
+
+/* Day silhouette — warm village */
+.silhouette-day {
+  opacity: 0.18;
+  filter: drop-shadow(0 -2px 12px rgba(80, 40, 0, 0.3));
+}
+
+/* Ensure page content doesn't overlap silhouette */
+.page > .container,
+.page > div > .container {
+  padding-bottom: 120px;
+}
+
+/* ================================================================
+   ENHANCED NIGHT BACKGROUND
+   ================================================================ */
+.page-dark.night-bg {
+  background: radial-gradient(ellipse at 50% -10%, #1a0a2e 0%, #0a0014 40%, #000008 100%);
+  overflow: hidden;
+}
+
+/* Moon in top-right for night phase */
+.page-dark.night-bg::before {
+  content: '';
+  position: fixed;
+  top: -40px;
+  right: -40px;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 60% 40%,
+    rgba(255, 245, 200, 0.12) 0%,
+    rgba(200, 180, 120, 0.06) 40%,
+    transparent 70%
+  );
+  box-shadow:
+    0 0 60px 20px rgba(255, 240, 150, 0.06),
+    0 0 120px 50px rgba(200, 160, 80, 0.03);
+  animation: moonGlow 6s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Fog mist layer at bottom for night */
+.page-dark.night-bg::after {
+  content: '';
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 180px;
+  background: linear-gradient(
+    to top,
+    rgba(10, 5, 30, 0.8) 0%,
+    rgba(20, 10, 50, 0.4) 40%,
+    transparent 100%
+  );
+  pointer-events: none;
+  z-index: 1;
+  animation: fogDrift 12s ease-in-out infinite alternate;
+}
+
+@keyframes moonGlow {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%       { opacity: 0.85; transform: scale(1.04); }
+}
+
+@keyframes fogDrift {
+  from { transform: translateX(-2%) scaleX(1.02); opacity: 0.8; }
+  to   { transform: translateX(2%) scaleX(0.98);  opacity: 1; }
+}
+
+/* ================================================================
+   ENHANCED DAY BACKGROUND
+   ================================================================ */
+.page-day {
+  background: linear-gradient(
+    180deg,
+    #c9a86c 0%,
+    #e8c97a 18%,
+    #f5dfa0 38%,
+    #fdf0c8 58%,
+    #fffae8 80%,
+    #fff8ee 100%
+  );
+  color: #1a1208;
+}
+
+/* ================================================================
+   OUTLINE ICON BUTTONS (nav actions)
+   ================================================================ */
+.btn-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-md);
+  border: 1.5px solid var(--border-medium);
+  background: transparent;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all var(--transition-base);
+  flex-shrink: 0;
+}
+
+.btn-icon:hover {
+  border-color: var(--border-strong);
+  color: var(--text-primary);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.btn-icon:active {
+  transform: scale(0.94);
+}
+
+/* Inline icon+label navigation (e.g. ← Keluar) */
+.btn-icon-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border-radius: var(--radius-md);
+  border: 1.5px solid var(--border-medium);
+  background: transparent;
+  color: var(--text-secondary);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--transition-base);
+}
+
+.btn-icon-label:hover {
+  border-color: var(--border-strong);
+  color: var(--text-primary);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+/* Day-mode adjustments for icon buttons */
+.page-day .btn-icon,
+.page-day .btn-icon-label {
+  border-color: rgba(100, 60, 10, 0.25);
+  color: rgba(60, 35, 5, 0.6);
+}
+
+.page-day .btn-icon:hover,
+.page-day .btn-icon-label:hover {
+  border-color: rgba(100, 60, 10, 0.5);
+  color: rgba(40, 20, 5, 0.85);
+  background: rgba(255, 255, 255, 0.4);
+}
+

@@ -1,10 +1,10 @@
 import { useState, useMemo } from 'react'
 import { useGame } from '../context/GameContext'
+import { NightSilhouette } from '../components/Silhouette'
 import './LobbyPage.css'
 
 const BOT_NAMES = ['Ayu', 'Bagas', 'Cici', 'Doni', 'Eka', 'Fajar', 'Gita', 'Hadi', 'Indah', 'Joko', 'Kiki', 'Lani']
 
-// Default role config based on player count
 function getDefaultConfig(playerCount) {
   return {
     werewolf: playerCount <= 6 ? 1 : 2,
@@ -13,12 +13,95 @@ function getDefaultConfig(playerCount) {
   }
 }
 
+// ── SVG Icons ──────────────────────────────────────────────────────────────
+const IconLeave = () => (
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+    <polyline points="16 17 21 12 16 7"/>
+    <line x1="21" y1="12" x2="9" y2="12"/>
+  </svg>
+)
+const IconSettings = () => (
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <circle cx="12" cy="12" r="3"/>
+    <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+  </svg>
+)
+const IconBack = () => (
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M19 12H5M12 19l-7-7 7-7"/>
+  </svg>
+)
+const IconCopy = () => (
+  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+  </svg>
+)
+const IconCheck = () => (
+  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+    <polyline points="20 6 9 17 4 12"/>
+  </svg>
+)
+const IconBot = () => (
+  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <rect x="3" y="11" width="18" height="10" rx="2"/>
+    <path d="M12 11V7"/>
+    <circle cx="12" cy="5" r="2"/>
+    <path d="M8 15h.01M16 15h.01"/>
+  </svg>
+)
+const IconPlay = () => (
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+    <polygon points="5 3 19 12 5 21 5 3"/>
+  </svg>
+)
+const IconKick = () => (
+  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+    <line x1="18" y1="6" x2="6" y2="18"/>
+    <line x1="6" y1="6" x2="18" y2="18"/>
+  </svg>
+)
+const IconWolf = () => (
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M4 2l2 4-3 3 3 1-1 4 4-2 3 3 3-3 4 2-1-4 3-1-3-3 2-4-4 2z"/>
+  </svg>
+)
+const IconDoctor = () => (
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+    <line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/>
+  </svg>
+)
+const IconDetective = () => (
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+  </svg>
+)
+const IconUser = () => (
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+  </svg>
+)
+const IconClock = () => (
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+  </svg>
+)
+const IconUsers = () => (
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+    <circle cx="9" cy="7" r="4"/>
+    <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+    <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+  </svg>
+)
+
 export default function LobbyPage() {
   const { state, actions } = useGame()
-  const [view, setView] = useState('main') // 'main' | 'settings'
+  const [view, setView] = useState('main')
   const [copied, setCopied] = useState(false)
 
-  // Seed customEnabled from server state
   const serverHasCustomTimer = state.timerConfig && (
     state.timerConfig.werewolf !== 30 ||
     state.timerConfig.dokter !== 7 ||
@@ -33,23 +116,15 @@ export default function LobbyPage() {
     state.roleConfig || { werewolf: 2, dokter: 1, detektif: 1 }
   )
   const [timerConfig, setTimerConfig] = useState(
-    state.timerConfig || {
-      werewolf: 30,
-      dokter: 7,
-      detektif: 6,
-      discussion: 300,
-      voting: 30
-    }
+    state.timerConfig || { werewolf: 30, dokter: 7, detektif: 6, discussion: 300, voting: 30 }
   )
 
   const currentPlayer = state.players.find(p => p.id === state.currentPlayerId)
   const isHost = currentPlayer?.isHost
   const allReady = state.players.length >= 5 && state.players.every(p => p.isReady)
   const canStart = isHost && allReady
-
   const playerCount = state.players.length
 
-  // Calculate effective config (custom or default)
   const effectiveConfig = useMemo(() => {
     if (customEnabled) return roleConfig
     return getDefaultConfig(playerCount)
@@ -96,162 +171,26 @@ export default function LobbyPage() {
         voting: { min: 10, max: 120 }
       }
       const limit = limits[phase]
-      
       let step = delta
-      if (phase === 'discussion') {
-        step = delta * 30 // Diskusi naik/turun per 30 detik
-      } else if (phase === 'werewolf' || phase === 'voting') {
-        step = delta * 5 // Werewolf dan Voting naik/turun per 5 detik
-      } else {
-        step = delta * 1 // Dokter dan Detektif naik/turun per 1 detik (contoh: 7s, 6s)
-      }
-
+      if (phase === 'discussion') step = delta * 30
+      else if (phase === 'werewolf' || phase === 'voting') step = delta * 5
       const newVal = Math.max(limit.min, Math.min(limit.max, prev[phase] + step))
       return { ...prev, [phase]: newVal }
     })
   }
 
   function handleStartGame() {
-    // Always pass timerConfig so server uses the configured durations
     if (customEnabled) {
       actions.startGame(roleConfig, timerConfig)
     } else {
-      // Pass null for roleConfig (use server auto-defaults) but still pass timerConfig
-      // so any previously set custom timer is also applied
       actions.startGame(null, timerConfig)
     }
   }
 
   function toggleCustom() {
-    if (!customEnabled) {
-      // Initialize with defaults for current player count
-      setRoleConfig(getDefaultConfig(playerCount))
-    }
+    if (!customEnabled) setRoleConfig(getDefaultConfig(playerCount))
     setCustomEnabled(!customEnabled)
   }
-
-  const renderMainView = (
-    <div className="page">
-      <button 
-        className="btn btn-ghost" 
-        onClick={actions.leaveRoom}
-        style={{ position: 'absolute', left: '16px', top: '16px', zIndex: 10, padding: '6px 12px', fontSize: '13px', color: 'var(--text-secondary)' }}
-      >
-        ← Keluar
-      </button>
-      <div className="bg-grid" />
-      <div className="container" style={{ position: 'relative', zIndex: 1, paddingTop: '32px' }}>
-        <div className="lobby-header animate-fade-in">
-          <div className="lobby-room-code" onClick={copyCode} id="btn-copy-code" title="Klik untuk salin">
-            <span className="lobby-code-label">Kode Room</span>
-            <span className="lobby-code-value">{state.roomCode}</span>
-            <span className="lobby-code-copy">{copied ? 'Disalin' : 'Salin Kode'}</span>
-          </div>
-        </div>
-
-        <div className="lobby-info animate-fade-in stagger-1">
-          <div className="lobby-count">
-            <span className="lobby-count-num">{state.players.length}</span>
-            <span className="lobby-count-label">/ 15 pemain</span>
-          </div>
-          {state.players.length < 5 && (
-            <div className="lobby-warning">
-              Minimal 5 pemain untuk memulai
-            </div>
-          )}
-        </div>
-
-        <div className="player-list lobby-player-list animate-fade-in stagger-2">
-          {state.players.map((player, i) => (
-            <div
-              key={player.id}
-              className={`player-item animate-fade-in stagger-${Math.min(i + 1, 5)}`}
-            >
-              <div className="player-avatar" style={{
-                background: player.isReady ? 'rgba(29, 158, 117, 0.2)' : 'var(--bg-elevated)',
-                color: player.isReady ? 'var(--green-glow)' : 'var(--text-secondary)',
-              }}>
-                {player.name[0].toUpperCase()}
-              </div>
-              <span className="player-name">
-                {player.name}
-                {player.isHost && <span className="lobby-host-badge">HOST</span>}
-                {player.isBot && <span className="lobby-bot-badge">BOT</span>}
-              </span>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                <span className="player-status" style={{
-                  color: player.isReady ? 'var(--green-primary)' : 'var(--text-tertiary)',
-                }}>
-                  {player.isReady ? 'Siap' : 'Menunggu'}
-                </span>
-                {isHost && player.id !== state.currentPlayerId && (
-                  <button 
-                    className="btn btn-ghost"
-                    style={{ padding: '2px 6px', fontSize: '11px', color: 'var(--red-primary)', border: '1px solid rgba(226,75,74,0.3)', borderRadius: '4px' }}
-                    onClick={() => actions.kickPlayer(player.id)}
-                    title="Keluarkan pemain"
-                  >
-                    X
-                  </button>
-                )}
-              </div>
-            </div>
-          ))}
-        </div>
-
-        {/* Role Configuration Panel — Host Only */}
-        {isHost && (
-          <div className="role-config-status animate-fade-in stagger-3">
-            {customEnabled ? (
-              <div className="text-center text-sm text-muted">
-                Mode Custom Aktif ({effectiveConfig.werewolf} Serigala, {effectiveConfig.dokter} Dokter, {effectiveConfig.detektif} Detektif)
-              </div>
-            ) : (
-              <div className="text-center text-sm text-muted">
-                Mode Otomatis Aktif
-              </div>
-            )}
-          </div>
-        )}
-
-        <div className="lobby-actions animate-fade-in stagger-4">
-          {isHost && (
-            <button 
-              className="btn btn-secondary btn-full"
-              onClick={() => setView('settings')}
-              id="btn-open-settings"
-            >
-              Pengaturan
-            </button>
-          )}
-          {isHost && state.players.length < 15 && (
-            <button className="btn btn-secondary btn-full" onClick={addBot} id="btn-add-bot">
-              Tambah Bot
-            </button>
-          )}
-
-          {isHost ? (
-            <button
-              className="btn btn-primary btn-lg btn-full"
-              onClick={handleStartGame}
-              disabled={!canStart || (customEnabled && !configValid)}
-              id="btn-start-game"
-            >
-              {canStart ? 'Mulai Permainan' : `Menunggu ${Math.max(0, 5 - state.players.length)} pemain lagi`}
-            </button>
-          ) : (
-            <button
-              className="btn btn-green btn-lg btn-full"
-              onClick={() => actions.toggleReady(state.currentPlayerId)}
-              id="btn-toggle-ready"
-            >
-              {currentPlayer?.isReady ? 'Status Siap' : 'Siapkan Diri'}
-            </button>
-          )}
-        </div>
-      </div>
-    </div>
-  )
 
   const formatMinutes = (seconds) => {
     const m = Math.floor(seconds / 60)
@@ -259,218 +198,260 @@ export default function LobbyPage() {
     return `${m}m ${s > 0 ? s + 's' : ''}`
   }
 
-  const renderSettingsView = () => (
-    <div className="page">
-      <div className="bg-grid" />
-      <div className="container" style={{ position: 'relative', zIndex: 1, paddingTop: '32px', paddingBottom: '32px' }}>
-        <button 
-          className="btn-back-nav mb-md" 
-          onClick={() => setView('main')}
-        >
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M19 12H5M12 19l-7-7 7-7"/>
-          </svg>
-          <span>Kembali ke Lobby</span>
+  // ── Settings View ──────────────────────────────────────────────────────────
+  if (view === 'settings') {
+    return (
+      <div className="page lobby-page">
+        <div className="home-bg-stars" aria-hidden="true" />
+        <NightSilhouette />
+
+        {/* Back button */}
+        <button className="subpage-back-btn" onClick={() => setView('main')} aria-label="Kembali ke Lobby">
+          <IconBack />
         </button>
 
-        <h1 className="heading-lg mb-sm">Pengaturan Custom</h1>
-        <p className="text-sm text-muted mb-lg">Atur jumlah peran dan durasi waktu setiap fase permainan.</p>
+        <div className="lobby-settings-wrapper">
+          <div className="lobby-settings-card animate-fade-in">
+            <h1 className="subpage-title" style={{ textAlign: 'left', marginBottom: '4px' }}>Pengaturan</h1>
+            <p className="subpage-desc" style={{ textAlign: 'left', marginBottom: '20px' }}>Atur peran dan durasi setiap fase.</p>
 
-        <div className="role-config-mode mb-lg">
-          <button
-            className={`role-config-mode-btn ${!customEnabled ? 'active' : ''}`}
-            onClick={() => setCustomEnabled(false)}
-          >
-            Otomatis
-          </button>
-          <button
-            className={`role-config-mode-btn ${customEnabled ? 'active' : ''}`}
-            onClick={toggleCustom}
-          >
-            Custom
-          </button>
+            {/* Mode toggle */}
+            <div className="lobby-mode-toggle">
+              <button
+                className={`lobby-mode-btn ${!customEnabled ? 'active' : ''}`}
+                onClick={() => setCustomEnabled(false)}
+              >Otomatis</button>
+              <button
+                className={`lobby-mode-btn ${customEnabled ? 'active' : ''}`}
+                onClick={toggleCustom}
+              >Custom</button>
+            </div>
+
+            {customEnabled && (
+              <>
+                {/* Role config */}
+                <div className="lobby-settings-section">
+                  <p className="lobby-settings-section-title">Jumlah Kartu</p>
+                  <div className="lobby-config-list">
+                    {[
+                      { key: 'werewolf', label: 'Serigala', sub: 'Tim Jahat', icon: <IconWolf />, min: 1, max: Math.min(4, playerCount - 1), val: roleConfig.werewolf },
+                      { key: 'dokter',   label: 'Dokter',   sub: 'Tim Baik',  icon: <IconDoctor />, min: 0, max: 1, val: roleConfig.dokter },
+                      { key: 'detektif', label: 'Detektif', sub: 'Tim Baik',  icon: <IconDetective />, min: 0, max: 1, val: roleConfig.detektif },
+                    ].map(r => (
+                      <div key={r.key} className="lobby-config-row">
+                        <div className="lobby-config-icon">{r.icon}</div>
+                        <div className="lobby-config-info">
+                          <span className="lobby-config-name">{r.label}</span>
+                          <span className="lobby-config-sub">{r.sub}</span>
+                        </div>
+                        <div className="lobby-config-controls">
+                          <button className="lobby-config-btn" onClick={() => updateRole(r.key, -1)} disabled={r.val <= r.min}>−</button>
+                          <span className="lobby-config-val">{r.val}</span>
+                          <button className="lobby-config-btn" onClick={() => updateRole(r.key, 1)} disabled={r.val >= r.max}>+</button>
+                        </div>
+                      </div>
+                    ))}
+                    {/* Warga (auto) */}
+                    <div className="lobby-config-row lobby-config-row-auto">
+                      <div className="lobby-config-icon"><IconUsers /></div>
+                      <div className="lobby-config-info">
+                        <span className="lobby-config-name">Warga Desa</span>
+                        <span className="lobby-config-sub">Otomatis</span>
+                      </div>
+                      <div className="lobby-config-controls">
+                        <span className="lobby-config-val lobby-config-val-auto">{wargaCount}</span>
+                      </div>
+                    </div>
+                    {!configValid && (
+                      <p className="lobby-config-error">Jumlah kartu spesial melebihi jumlah pemain!</p>
+                    )}
+                  </div>
+                </div>
+
+                {/* Timer config */}
+                <div className="lobby-settings-section">
+                  <p className="lobby-settings-section-title">Durasi Waktu</p>
+                  <div className="lobby-config-list">
+                    {[
+                      { key: 'werewolf',  label: 'Fase Serigala', sub: 'Aksi malam',  icon: <IconClock />, val: timerConfig.werewolf,  fmt: v => `${v}s`,            min: 5,   max: 120 },
+                      { key: 'dokter',    label: 'Fase Dokter',   sub: 'Aksi malam',  icon: <IconClock />, val: timerConfig.dokter,    fmt: v => `${v}s`,            min: 5,   max: 120 },
+                      { key: 'detektif',  label: 'Fase Detektif', sub: 'Aksi malam',  icon: <IconClock />, val: timerConfig.detektif,  fmt: v => `${v}s`,            min: 5,   max: 120 },
+                      { key: 'discussion',label: 'Fase Diskusi',  sub: 'Pagi hari',   icon: <IconClock />, val: timerConfig.discussion, fmt: formatMinutes,          min: 30,  max: 900 },
+                      { key: 'voting',    label: 'Fase Voting',   sub: 'Siang hari',  icon: <IconClock />, val: timerConfig.voting,    fmt: v => `${v}s`,            min: 10,  max: 120 },
+                    ].map(t => (
+                      <div key={t.key} className="lobby-config-row">
+                        <div className="lobby-config-icon">{t.icon}</div>
+                        <div className="lobby-config-info">
+                          <span className="lobby-config-name">{t.label}</span>
+                          <span className="lobby-config-sub">{t.sub}</span>
+                        </div>
+                        <div className="lobby-config-controls">
+                          <button className="lobby-config-btn" onClick={() => updateTimer(t.key, -1)} disabled={t.val <= t.min}>−</button>
+                          <span className="lobby-config-val" style={{ minWidth: '44px', fontSize: '13px' }}>{t.fmt(t.val)}</span>
+                          <button className="lobby-config-btn" onClick={() => updateTimer(t.key, 1)} disabled={t.val >= t.max}>+</button>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </>
+            )}
+
+            <button
+              className="subpage-btn-primary"
+              onClick={() => {
+                if (customEnabled) actions.updateConfig(roleConfig, timerConfig)
+                else actions.updateConfig(null, timerConfig)
+                setView('main')
+              }}
+            >
+              <IconCheck />
+              Simpan Pengaturan
+            </button>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  // ── Main Lobby View ────────────────────────────────────────────────────────
+  return (
+    <div className="page lobby-page">
+      <div className="home-bg-stars" aria-hidden="true" />
+      <NightSilhouette />
+
+      {/* Leave button — top left */}
+      <button
+        className="subpage-back-btn"
+        onClick={actions.leaveRoom}
+        id="btn-leave-room"
+        aria-label="Keluar dari room"
+        title="Keluar"
+      >
+        <IconLeave />
+      </button>
+
+      {/* Settings button — top right (host only) */}
+      {isHost && (
+        <button
+          className="subpage-back-btn lobby-settings-btn"
+          onClick={() => setView('settings')}
+          id="btn-open-settings"
+          aria-label="Pengaturan"
+          title="Pengaturan"
+        >
+          <IconSettings />
+        </button>
+      )}
+
+      <div className="lobby-main-wrapper">
+        {/* Room Code Card */}
+        <div className="lobby-code-card animate-fade-in" onClick={copyCode} id="btn-copy-code" role="button" tabIndex={0}>
+          <span className="lobby-code-label">Kode Room</span>
+          <span className="lobby-code-value">{state.roomCode}</span>
+          <span className="lobby-code-copy">
+            {copied ? <><IconCheck /> Disalin!</> : <><IconCopy /> Salin Kode</>}
+          </span>
         </div>
 
-        {customEnabled && (
-          <>
-            {/* ROLE SETTINGS */}
-            <div className="settings-section mb-xl">
-              <h2 className="heading-md mb-md">Jumlah Kartu</h2>
-              <div className="role-config-panel">
-                <div className="role-config-custom">
-                  {/* Werewolf */}
-                  <div className="role-config-row">
-                    <div className="role-config-info">
-                      <span className="role-config-emoji">🐺</span>
-                      <div>
-                        <span className="role-config-name">Serigala</span>
-                        <span className="role-config-team team-evil">Tim Jahat</span>
-                      </div>
-                    </div>
-                    <div className="role-config-controls">
-                      <button className="role-config-btn" onClick={() => updateRole('werewolf', -1)} disabled={roleConfig.werewolf <= 1}>−</button>
-                      <span className="role-config-count">{roleConfig.werewolf}</span>
-                      <button className="role-config-btn" onClick={() => updateRole('werewolf', 1)} disabled={roleConfig.werewolf >= Math.min(4, playerCount - 1)}>+</button>
-                    </div>
-                  </div>
-
-                  {/* Dokter */}
-                  <div className="role-config-row">
-                    <div className="role-config-info">
-                      <span className="role-config-emoji">💊</span>
-                      <div>
-                        <span className="role-config-name">Dokter</span>
-                        <span className="role-config-team team-good">Tim Baik</span>
-                      </div>
-                    </div>
-                    <div className="role-config-controls">
-                      <button className="role-config-btn" onClick={() => updateRole('dokter', -1)} disabled={roleConfig.dokter <= 0}>−</button>
-                      <span className="role-config-count">{roleConfig.dokter}</span>
-                      <button className="role-config-btn" onClick={() => updateRole('dokter', 1)} disabled={roleConfig.dokter >= 1}>+</button>
-                    </div>
-                  </div>
-
-                  {/* Detektif */}
-                  <div className="role-config-row">
-                    <div className="role-config-info">
-                      <span className="role-config-emoji">🔍</span>
-                      <div>
-                        <span className="role-config-name">Detektif</span>
-                        <span className="role-config-team team-good">Tim Baik</span>
-                      </div>
-                    </div>
-                    <div className="role-config-controls">
-                      <button className="role-config-btn" onClick={() => updateRole('detektif', -1)} disabled={roleConfig.detektif <= 0}>−</button>
-                      <span className="role-config-count">{roleConfig.detektif}</span>
-                      <button className="role-config-btn" onClick={() => updateRole('detektif', 1)} disabled={roleConfig.detektif >= 1}>+</button>
-                    </div>
-                  </div>
-
-                  {/* Warga */}
-                  <div className="role-config-row role-config-row-auto">
-                    <div className="role-config-info">
-                      <span className="role-config-emoji">👤</span>
-                      <div>
-                        <span className="role-config-name">Warga Desa</span>
-                        <span className="role-config-team team-good">Otomatis</span>
-                      </div>
-                    </div>
-                    <div className="role-config-controls">
-                      <span className="role-config-count role-config-count-auto">{wargaCount}</span>
-                    </div>
-                  </div>
-                  {!configValid && <div className="role-config-error mt-sm">⚠ Jumlah kartu spesial melebihi jumlah pemain!</div>}
+        {/* Player count + warning */}
+        <div className="lobby-meta animate-fade-in">
+          <div className="lobby-meta-count">
+            <IconUsers />
+            <span><strong>{state.players.length}</strong> / 15 pemain</span>
+          </div>
+          {state.players.length < 5 && (
+            <span className="lobby-meta-warning">
+              Minimal 5 pemain untuk memulai
+            </span>
+          )}
+          {isHost && (
+            customEnabled ? (
+              <div className="lobby-meta-config">
+                <div className="lobby-meta-chip chip-wolf">
+                  <IconWolf /> {effectiveConfig.werewolf}
+                </div>
+                <div className="lobby-meta-chip chip-doctor">
+                  <IconDoctor /> {effectiveConfig.dokter}
+                </div>
+                <div className="lobby-meta-chip chip-detective">
+                  <IconDetective /> {effectiveConfig.detektif}
                 </div>
               </div>
-            </div>
+            ) : (
+              <span className="lobby-meta-mode">Otomatis</span>
+            )
+          )}
+        </div>
 
-            {/* TIMER SETTINGS */}
-            <div className="settings-section mb-xl">
-              <h2 className="heading-md mb-md">Durasi Waktu (Countdown)</h2>
-              <div className="role-config-panel">
-                <div className="role-config-custom">
-                  {/* Timer Serigala */}
-                  <div className="role-config-row">
-                    <div className="role-config-info">
-                      <span className="role-config-emoji">⏱️</span>
-                      <div>
-                        <span className="role-config-name">Fase Serigala</span>
-                        <span className="text-xs text-muted">Aksi malam</span>
-                      </div>
-                    </div>
-                    <div className="role-config-controls" style={{ minWidth: '110px' }}>
-                      <button className="role-config-btn" onClick={() => updateTimer('werewolf', -1)} disabled={timerConfig.werewolf <= 5}>−</button>
-                      <span className="role-config-count" style={{ width: '30px' }}>{timerConfig.werewolf}s</span>
-                      <button className="role-config-btn" onClick={() => updateTimer('werewolf', 1)} disabled={timerConfig.werewolf >= 120}>+</button>
-                    </div>
-                  </div>
+        {/* Player grid */}
+        <div className="lobby-player-grid animate-fade-in">
+          {state.players.map((player, i) => (
+            <div
+              key={player.id}
+              className={[
+                'lobby-player-card',
+                player.isReady ? 'ready' : '',
+                player.isHost  ? 'is-host' : '',
+                player.isBot   ? 'is-bot'  : '',
+              ].filter(Boolean).join(' ')}
+            >
+              {/* Kick button — corner */}
+              {isHost && player.id !== state.currentPlayerId && (
+                <button
+                  className="lobby-kick-btn"
+                  onClick={() => actions.kickPlayer(player.id)}
+                  title="Keluarkan pemain"
+                >
+                  <IconKick />
+                </button>
+              )}
 
-                  {/* Timer Dokter */}
-                  <div className="role-config-row">
-                    <div className="role-config-info">
-                      <span className="role-config-emoji">⏱️</span>
-                      <div>
-                        <span className="role-config-name">Fase Dokter</span>
-                        <span className="text-xs text-muted">Aksi malam</span>
-                      </div>
-                    </div>
-                    <div className="role-config-controls" style={{ minWidth: '110px' }}>
-                      <button className="role-config-btn" onClick={() => updateTimer('dokter', -1)} disabled={timerConfig.dokter <= 5}>−</button>
-                      <span className="role-config-count" style={{ width: '30px' }}>{timerConfig.dokter}s</span>
-                      <button className="role-config-btn" onClick={() => updateTimer('dokter', 1)} disabled={timerConfig.dokter >= 120}>+</button>
-                    </div>
-                  </div>
-
-                  {/* Timer Detektif */}
-                  <div className="role-config-row">
-                    <div className="role-config-info">
-                      <span className="role-config-emoji">⏱️</span>
-                      <div>
-                        <span className="role-config-name">Fase Detektif</span>
-                        <span className="text-xs text-muted">Aksi malam</span>
-                      </div>
-                    </div>
-                    <div className="role-config-controls" style={{ minWidth: '110px' }}>
-                      <button className="role-config-btn" onClick={() => updateTimer('detektif', -1)} disabled={timerConfig.detektif <= 5}>−</button>
-                      <span className="role-config-count" style={{ width: '30px' }}>{timerConfig.detektif}s</span>
-                      <button className="role-config-btn" onClick={() => updateTimer('detektif', 1)} disabled={timerConfig.detektif >= 120}>+</button>
-                    </div>
-                  </div>
-
-                  {/* Timer Diskusi */}
-                  <div className="role-config-row">
-                    <div className="role-config-info">
-                      <span className="role-config-emoji">⏱️</span>
-                      <div>
-                        <span className="role-config-name">Fase Diskusi</span>
-                        <span className="text-xs text-muted">Pagi hari</span>
-                      </div>
-                    </div>
-                    <div className="role-config-controls" style={{ minWidth: '110px' }}>
-                      <button className="role-config-btn" onClick={() => updateTimer('discussion', -1)} disabled={timerConfig.discussion <= 30}>−</button>
-                      <span className="role-config-count" style={{ width: '40px', fontSize: '13px' }}>{formatMinutes(timerConfig.discussion)}</span>
-                      <button className="role-config-btn" onClick={() => updateTimer('discussion', 1)} disabled={timerConfig.discussion >= 900}>+</button>
-                    </div>
-                  </div>
-
-                  {/* Timer Voting */}
-                  <div className="role-config-row">
-                    <div className="role-config-info">
-                      <span className="role-config-emoji">⏱️</span>
-                      <div>
-                        <span className="role-config-name">Fase Voting</span>
-                        <span className="text-xs text-muted">Siang hari</span>
-                      </div>
-                    </div>
-                    <div className="role-config-controls" style={{ minWidth: '110px' }}>
-                      <button className="role-config-btn" onClick={() => updateTimer('voting', -1)} disabled={timerConfig.voting <= 10}>−</button>
-                      <span className="role-config-count" style={{ width: '30px' }}>{timerConfig.voting}s</span>
-                      <button className="role-config-btn" onClick={() => updateTimer('voting', 1)} disabled={timerConfig.voting >= 120}>+</button>
-                    </div>
-                  </div>
-                </div>
+              <div className="lobby-card-avatar">
+                {player.name[0].toUpperCase()}
               </div>
+              <span className="lobby-card-name">{player.name}</span>
+              <span className={`lobby-card-status ${player.isReady ? 'ready' : ''}`}>
+                {player.isReady ? 'Siap' : 'Menunggu'}
+              </span>
             </div>
-          </>
-        )}
+          ))}
+        </div>
 
-        <button 
-          className="btn btn-primary btn-lg btn-full" 
-          onClick={() => {
-            // Sync settings to server immediately so they persist
-            if (customEnabled) {
-              actions.updateConfig(roleConfig, timerConfig)
-            } else {
-              actions.updateConfig(null, timerConfig)
-            }
-            setView('main')
-          }}
-        >
-          Simpan Pengaturan
-        </button>
+        {/* Action buttons */}
+        <div className="lobby-actions animate-fade-in">
+          {isHost && state.players.length < 15 && (
+            <button className="lobby-action-secondary" onClick={addBot} id="btn-add-bot">
+              <IconBot />
+              Tambah Bot
+            </button>
+          )}
+
+          {isHost ? (
+            <button
+              className="subpage-btn-primary"
+              onClick={handleStartGame}
+              disabled={!canStart || (customEnabled && !configValid)}
+              id="btn-start-game"
+            >
+              <IconPlay />
+              {canStart ? 'Mulai Permainan' : `Tunggu ${Math.max(0, 5 - state.players.length)} pemain lagi`}
+            </button>
+          ) : (
+            <button
+              className={`lobby-ready-btn ${currentPlayer?.isReady ? 'ready' : ''}`}
+              onClick={() => actions.toggleReady(state.currentPlayerId)}
+              id="btn-toggle-ready"
+            >
+              {currentPlayer?.isReady ? (
+                <><IconCheck /> Siap!</>
+              ) : (
+                'Siapkan Diri'
+              )}
+            </button>
+          )}
+        </div>
       </div>
     </div>
   )
-
-  return view === 'settings' ? renderSettingsView() : renderMainView
 }

@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useGame, ROLES, PHASES } from '../context/GameContext'
 import Timer from '../components/Timer'
+import { NightSilhouette } from '../components/Silhouette'
 import './NightPage.css'
 
 export default function NightPage() {
@@ -97,6 +98,8 @@ export default function NightPage() {
     <div className="page page-dark night-bg">
       {/* Starfield overlay */}
       <div className="night-stars" aria-hidden="true" />
+      {/* Forest silhouette */}
+      <NightSilhouette />
 
       <div className="container" style={{ position: 'relative', zIndex: 1 }}>
         {/* Phase label */}

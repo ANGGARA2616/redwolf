@@ -1,440 +1,463 @@
-.lobby-header {
-  text-align: center;
-  margin-bottom: var(--space-md);
+/* ═══════════════════════════════════════════════════════════════
+   LobbyPage.css — Aligned with "Midnight" design system
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ── Page layout ─────────────────────────────────────────────── */
+.lobby-page {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+  background: linear-gradient(170deg, #1a0a2e 0%, #100820 50%, #000008 100%);
+  overflow: hidden;
 }
 
-.lobby-room-code {
-  display: inline-flex;
+/* Settings button — top right */
+.lobby-settings-btn {
+  position: fixed;
+  top: 20px;
+  right: 20px !important;
+  left: auto !important;
+}
+
+/* ── Main wrapper ─────────────────────────────────────────────── */
+.lobby-main-wrapper {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  width: 100%;
+  max-width: 460px;
+  margin: 0 auto;
+  padding: 72px 20px 180px;
+  box-sizing: border-box;
+}
+
+/* ── Room Code Card ──────────────────────────────────────────── */
+.lobby-code-card {
+  display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 2px;
-  padding: 12px var(--space-xl);
-  background: var(--bg-card);
-  border: 1px solid var(--border-medium);
-  border-radius: var(--radius-xl);
+  gap: 4px;
+  padding: 18px 24px 14px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(226,75,74,0.25);
+  border-radius: 20px;
+  backdrop-filter: blur(12px);
   cursor: pointer;
-  transition: all var(--transition-base);
+  transition: all 0.2s ease;
+  box-shadow: 0 0 30px rgba(226,75,74,0.06), 0 4px 20px rgba(0,0,0,0.3);
   animation: glow 3s ease-in-out infinite;
 }
 
-.lobby-room-code:hover {
-  border-color: var(--red-primary);
-  transform: scale(1.02);
+.lobby-code-card:hover {
+  border-color: rgba(226,75,74,0.5);
+  transform: scale(1.01);
 }
 
 .lobby-code-label {
   font-size: 11px;
-  font-weight: 500;
-  color: var(--text-tertiary);
+  font-weight: 600;
+  color: rgba(255,255,255,0.35);
   text-transform: uppercase;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.12em;
 }
 
 .lobby-code-value {
-  font-size: 32px;
+  font-size: 34px;
   font-weight: 800;
-  letter-spacing: 0.1em;
-  color: var(--red-primary);
-  text-shadow: 0 0 20px rgba(226, 75, 74, 0.3);
+  letter-spacing: 0.15em;
+  color: rgba(226,75,74,0.95);
+  text-shadow: 0 0 24px rgba(226,75,74,0.35);
 }
 
 .lobby-code-copy {
-  font-size: 12px;
-  color: var(--text-secondary);
-}
-
-.lobby-info {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  margin-bottom: var(--space-md);
-  padding: 0 var(--space-xs);
-}
-
-.lobby-count {
-  display: flex;
-  align-items: baseline;
-  gap: var(--space-xs);
-}
-
-.lobby-count-num {
-  font-size: 24px;
-  font-weight: 800;
-  color: var(--text-primary);
-}
-
-.lobby-count-label {
-  font-size: 13px;
-  color: var(--text-tertiary);
-}
-
-.lobby-warning {
+  gap: 5px;
   font-size: 12px;
-  color: var(--amber-primary);
-  padding: 4px 10px;
-  background: rgba(229, 165, 32, 0.1);
-  border-radius: var(--radius-full);
+  color: rgba(255,255,255,0.35);
 }
 
-.lobby-host-badge {
-  display: inline-block;
-  margin-left: var(--space-sm);
-  padding: 2px 8px;
-  background: rgba(226, 75, 74, 0.15);
-  color: var(--red-glow);
-  font-size: 10px;
-  font-weight: 700;
-  border-radius: var(--radius-full);
-  letter-spacing: 0.05em;
+/* ── Meta info (count, warning) ──────────────────────────────── */
+.lobby-meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  padding: 10px 14px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 12px;
 }
 
-.lobby-bot-badge {
-  display: inline-block;
-  margin-left: var(--space-sm);
-  padding: 2px 8px;
-  background: rgba(255, 255, 255, 0.06);
-  color: var(--text-tertiary);
-  font-size: 10px;
+.lobby-meta-count {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 14px;
   font-weight: 600;
-  border-radius: var(--radius-full);
+  color: rgba(255,255,255,0.7);
 }
 
+.lobby-meta-count strong { color: white; }
+
+.lobby-meta-warning {
+  font-size: 12px;
+  color: rgba(255,200,80,0.8);
+  margin-left: auto;
+}
+
+.lobby-meta-mode {
+  font-size: 12px;
+  color: rgba(255,255,255,0.35);
+  margin-left: auto;
+}
+
+/* ── Meta config chips (custom mode) ──────────────────────── */
+.lobby-meta-config {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-left: auto;
+}
+
+.lobby-meta-chip {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 9px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 700;
+  border: 1px solid;
+}
+
+.chip-wolf     { background: rgba(226,75,74,0.12);  border-color: rgba(226,75,74,0.3);   color: rgba(226,75,74,0.9);   }
+.chip-doctor   { background: rgba(29,158,117,0.1);  border-color: rgba(29,158,117,0.3);  color: rgba(29,198,137,0.9);  }
+.chip-detective{ background: rgba(100,140,255,0.1); border-color: rgba(100,140,255,0.3); color: rgba(130,160,255,0.9); }
+
+/* ── Player grid ───────────────────────────────────────── */
+.lobby-player-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+.lobby-player-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  padding: 14px 8px 10px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 14px;
+  text-align: center;
+  transition: border-color 0.2s, background 0.2s;
+  min-width: 0;
+  overflow: hidden;
+}
+
+/* HOST — red tint */
+.lobby-player-card.is-host {
+  border-color: rgba(226,75,74,0.4);
+  background: rgba(226,75,74,0.06);
+  box-shadow: 0 0 16px rgba(226,75,74,0.08);
+}
+
+/* BOT — blue tint */
+.lobby-player-card.is-bot {
+  border-color: rgba(100,120,255,0.35);
+  background: rgba(100,120,255,0.06);
+}
+
+/* READY — green tint (overrides normal, not host/bot) */
+.lobby-player-card.ready:not(.is-host):not(.is-bot) {
+  border-color: rgba(29,158,117,0.3);
+  background: rgba(29,158,117,0.05);
+}
+
+.lobby-card-avatar {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  font-weight: 700;
+  color: rgba(255,255,255,0.75);
+  flex-shrink: 0;
+}
+
+.lobby-player-card.is-host  .lobby-card-avatar { border-color: rgba(226,75,74,0.5);   background: rgba(226,75,74,0.12);   color: rgba(226,75,74,0.95); }
+.lobby-player-card.is-bot   .lobby-card-avatar { border-color: rgba(100,120,255,0.5); background: rgba(100,120,255,0.12); color: rgba(130,145,255,0.95); }
+.lobby-player-card.ready:not(.is-host):not(.is-bot) .lobby-card-avatar { border-color: rgba(29,158,117,0.5); background: rgba(29,158,117,0.15); color: #1d9e75; }
+
+.lobby-card-name {
+  font-size: 12px;
+  font-weight: 600;
+  color: rgba(255,255,255,0.85);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
+  padding: 0 4px;
+}
+
+.lobby-card-status {
+  font-size: 11px;
+  color: rgba(255,255,255,0.28);
+}
+.lobby-player-status.ready { color: #1d9e75; }
+
+/* Kick button — absolute top-right corner of card */
+.lobby-kick-btn {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  width: 18px;
+  height: 18px;
+  border-radius: 5px;
+  border: 1px solid rgba(226,75,74,0.2);
+  background: rgba(226,75,74,0.05);
+  color: rgba(226,75,74,0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.lobby-kick-btn:hover {
+  background: rgba(226,75,74,0.2);
+  color: rgba(226,75,74,1);
+  border-color: rgba(226,75,74,0.5);
+}
+
+
+/* ── Action buttons ──────────────────────────────────────────── */
 .lobby-actions {
   display: flex;
   flex-direction: column;
-  gap: var(--space-md);
-  margin-top: var(--space-lg);
+  gap: 10px;
+  margin-top: 4px;
 }
 
-/* ─── Role Configuration Section ──────────────────────────────────────── */
-
-.role-config-section {
-  margin-top: var(--space-lg);
-}
-
-.role-config-toggle {
+.lobby-action-secondary {
   width: 100%;
+  padding: 12px 20px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(255,255,255,0.04);
+  color: rgba(255,255,255,0.65);
+  font-size: 14px;
+  font-weight: 600;
   display: flex;
   align-items: center;
-  gap: var(--space-sm);
-  padding: 12px 16px;
-  background: var(--bg-card);
-  border: 1px solid var(--border-medium);
-  border-radius: var(--radius-lg);
-  color: var(--text-primary);
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.lobby-action-secondary:hover {
+  background: rgba(255,255,255,0.07);
+  border-color: rgba(255,255,255,0.22);
+  color: rgba(255,255,255,0.9);
+}
+
+.lobby-ready-btn {
+  width: 100%;
+  padding: 14px 20px;
+  border-radius: 12px;
+  border: 1px solid rgba(29,158,117,0.4);
+  background: rgba(29,158,117,0.1);
+  color: #1d9e75;
+  font-size: 15px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.lobby-ready-btn:hover {
+  background: rgba(29,158,117,0.18);
+  border-color: rgba(29,158,117,0.6);
+}
+.lobby-ready-btn.ready {
+  background: rgba(29,158,117,0.2);
+  border-color: rgba(29,158,117,0.5);
+  color: #22c78d;
+}
+
+/* ── Settings view ───────────────────────────────────────────── */
+.lobby-settings-wrapper {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 460px;
+  margin: 0 auto;
+  padding: 72px 20px 40px;
+  box-sizing: border-box;
+}
+
+.lobby-settings-card {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 24px;
+  backdrop-filter: blur(16px);
+  padding: 28px 24px 32px;
+  box-shadow: 0 24px 64px rgba(0,0,0,0.4);
+}
+
+.lobby-mode-toggle {
+  display: flex;
+  gap: 8px;
+  padding: 5px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 12px;
+  margin-bottom: 20px;
+}
+
+.lobby-mode-btn {
+  flex: 1;
+  padding: 9px;
+  border-radius: 8px;
+  border: none;
+  background: transparent;
+  color: rgba(255,255,255,0.4);
   font-size: 14px;
   font-weight: 600;
   cursor: pointer;
-  transition: all var(--transition-base);
+  transition: all 0.2s;
+}
+.lobby-mode-btn.active {
+  background: rgba(226,75,74,0.15);
+  border: 1px solid rgba(226,75,74,0.3);
+  color: rgba(226,75,74,0.9);
 }
 
-.role-config-toggle:hover {
-  border-color: var(--red-primary);
-  background: rgba(226, 75, 74, 0.05);
+.lobby-settings-section {
+  margin-bottom: 20px;
 }
 
-.role-config-toggle-icon {
-  font-size: 16px;
-  opacity: 0.7;
-}
-
-.role-config-toggle-badge {
-  margin-left: auto;
-  padding: 2px 10px;
-  background: rgba(226, 75, 74, 0.12);
-  color: var(--red-primary);
+.lobby-settings-section-title {
   font-size: 11px;
   font-weight: 700;
-  border-radius: var(--radius-full);
-  letter-spacing: 0.03em;
+  color: rgba(255,255,255,0.3);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin: 0 0 10px;
 }
 
-.role-config-chevron {
-  font-size: 18px;
-  font-weight: 700;
-  color: var(--text-tertiary);
-  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  transform: rotate(0deg);
-}
-
-.role-config-chevron.open {
-  transform: rotate(90deg);
-}
-
-.role-config-panel {
-  margin-top: var(--space-sm);
-  padding: 16px;
-  background: var(--bg-card);
-  border: 1px solid var(--border-medium);
-  border-radius: var(--radius-lg);
-  animation: slideDown 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-@keyframes slideDown {
-  from {
-    opacity: 0;
-    transform: translateY(-8px);
-    max-height: 0;
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-    max-height: 500px;
-  }
-}
-
-/* Mode toggle buttons (Otomatis / Custom) */
-.role-config-mode {
-  display: flex;
-  gap: 4px;
-  padding: 3px;
-  background: var(--bg-elevated);
-  border-radius: var(--radius-md);
-  margin-bottom: var(--space-md);
-}
-
-.role-config-mode-btn {
-  flex: 1;
-  padding: 8px 12px;
-  border: none;
-  border-radius: var(--radius-sm);
-  font-size: 13px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all var(--transition-base);
-  background: transparent;
-  color: var(--text-tertiary);
-}
-
-.role-config-mode-btn.active {
-  background: var(--red-primary);
-  color: #fff;
-  box-shadow: 0 2px 8px rgba(226, 75, 74, 0.3);
-}
-
-.role-config-mode-btn:not(.active):hover {
-  color: var(--text-primary);
-  background: rgba(255, 255, 255, 0.04);
-}
-
-/* Auto mode info */
-.role-config-auto-info {
-  text-align: center;
-}
-
-.role-config-auto-desc {
-  font-size: 12px;
-  color: var(--text-tertiary);
-  margin-bottom: var(--space-sm);
-}
-
-.role-config-auto-summary {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 8px;
-}
-
-.role-chip {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  padding: 6px 12px;
-  border-radius: var(--radius-full);
-  font-size: 12px;
-  font-weight: 600;
-}
-
-.role-chip-wolf {
-  background: rgba(226, 75, 74, 0.12);
-  color: var(--red-primary);
-  border: 1px solid rgba(226, 75, 74, 0.2);
-}
-
-.role-chip-dokter {
-  background: rgba(29, 158, 117, 0.12);
-  color: var(--green-primary);
-  border: 1px solid rgba(29, 158, 117, 0.2);
-}
-
-.role-chip-detektif {
-  background: rgba(88, 140, 236, 0.12);
-  color: var(--blue-primary);
-  border: 1px solid rgba(88, 140, 236, 0.2);
-}
-
-.role-chip-warga {
-  background: rgba(255, 255, 255, 0.06);
-  color: var(--text-secondary);
-  border: 1px solid var(--border-subtle);
-}
-
-/* Custom mode rows */
-.role-config-custom {
+.lobby-config-list {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 2px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 14px;
+  overflow: hidden;
 }
 
-.role-config-row {
+.lobby-config-row {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  padding: 10px 12px;
-  background: var(--bg-elevated);
-  border-radius: var(--radius-md);
-  border: 1px solid transparent;
-  transition: border-color var(--transition-base);
+  gap: 12px;
+  padding: 11px 14px;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+.lobby-config-row:last-child { border-bottom: none; }
+.lobby-config-row-auto { opacity: 0.65; }
+
+.lobby-config-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: rgba(255,255,255,0.05);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255,255,255,0.5);
+  flex-shrink: 0;
 }
 
-.role-config-row:hover {
-  border-color: var(--border-medium);
+.lobby-config-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
 }
 
-.role-config-row-auto {
-  opacity: 0.7;
-  background: rgba(255, 255, 255, 0.02);
+.lobby-config-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: rgba(255,255,255,0.8);
 }
 
-.role-config-info {
+.lobby-config-sub {
+  font-size: 11px;
+  color: rgba(255,255,255,0.3);
+}
+
+.lobby-config-controls {
   display: flex;
   align-items: center;
   gap: 10px;
 }
 
-.role-config-emoji {
-  font-size: 22px;
-  width: 32px;
+.lobby-config-btn {
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(255,255,255,0.05);
+  color: rgba(255,255,255,0.7);
+  font-size: 16px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.lobby-config-btn:hover:not(:disabled) {
+  background: rgba(226,75,74,0.15);
+  border-color: rgba(226,75,74,0.35);
+  color: rgba(226,75,74,0.9);
+}
+.lobby-config-btn:disabled {
+  opacity: 0.25;
+  cursor: not-allowed;
+}
+
+.lobby-config-val {
+  font-size: 15px;
+  font-weight: 700;
+  color: white;
   text-align: center;
+  min-width: 24px;
 }
+.lobby-config-val-auto { color: rgba(255,255,255,0.5); }
 
-.role-config-name {
-  display: block;
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--text-primary);
-  line-height: 1.2;
-}
-
-.role-config-team {
-  display: block;
-  font-size: 10px;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  margin-top: 1px;
-}
-
-.team-evil {
-  color: var(--red-primary);
-}
-
-.team-good {
-  color: var(--green-primary);
-}
-
-/* Controls (- count +) */
-.role-config-controls {
+.lobby-config-error {
+  font-size: 12px;
+  color: rgba(226,75,74,0.9);
+  padding: 8px 14px;
   display: flex;
   align-items: center;
   gap: 6px;
 }
 
-.role-config-btn {
-  width: 32px;
-  height: 32px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid var(--border-medium);
-  border-radius: var(--radius-sm);
-  background: var(--bg-card);
-  color: var(--text-primary);
-  font-size: 18px;
-  font-weight: 700;
-  cursor: pointer;
-  transition: all var(--transition-base);
-  line-height: 1;
+/* ── Glow animation ──────────────────────────────────────────── */
+@keyframes glow {
+  0%, 100% { box-shadow: 0 0 20px rgba(226,75,74,0.05), 0 4px 20px rgba(0,0,0,0.3); }
+  50%       { box-shadow: 0 0 36px rgba(226,75,74,0.12), 0 4px 20px rgba(0,0,0,0.3); }
 }
-
-.role-config-btn:hover:not(:disabled) {
-  background: var(--red-primary);
-  border-color: var(--red-primary);
-  color: #fff;
-  box-shadow: 0 2px 8px rgba(226, 75, 74, 0.3);
-}
-
-.role-config-btn:disabled {
-  opacity: 0.25;
-  cursor: not-allowed;
-}
-
-.role-config-count {
-  width: 28px;
-  text-align: center;
-  font-size: 18px;
-  font-weight: 800;
-  color: var(--text-primary);
-  font-variant-numeric: tabular-nums;
-}
-
-.role-config-count-auto {
-  color: var(--text-tertiary);
-  font-style: italic;
-}
-
-.role-config-error {
-  margin-top: var(--space-xs);
-  padding: 8px 12px;
-  background: rgba(226, 75, 74, 0.1);
-  border: 1px solid rgba(226, 75, 74, 0.3);
-  border-radius: var(--radius-sm);
-  color: var(--red-primary);
-  font-size: 12px;
-  font-weight: 600;
-  text-align: center;
-}
-
-.lobby-actions {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-sm);
-}
-
-.role-config-status {
-  margin-top: var(--space-lg);
-  margin-bottom: var(--space-md);
-  display: flex;
-  justify-content: center;
-}
-
-/* Lobby player list specific overrides */
-.lobby-player-list {
-  max-height: 410px; /* Fits exactly 6 players before scrolling */
-  overflow-y: auto;
-  padding-right: 8px; /* space for scrollbar */
-}
-
-/* Custom scrollbar for lobby player list */
-.lobby-player-list::-webkit-scrollbar {
-  width: 6px;
-}
-
-.lobby-player-list::-webkit-scrollbar-track {
-  background: rgba(255, 255, 255, 0.02);
-  border-radius: 4px;
-}
-
-.lobby-player-list::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.15);
-  border-radius: 4px;
-}
-
-.lobby-player-list::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.25);
-}
-
-.lobby-player-list .player-item {
-  padding: 10px 16px; /* Reduced from 16px top/bottom to 10px */
-}
-
